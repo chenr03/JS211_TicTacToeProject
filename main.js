@@ -22,6 +22,7 @@ let board = [
 // using let because the variable is expected to change from 'X' to 'O' and back
 let playerTurn = 'X';
 
+
 // is a function that print the current status of the board using the variable - board
 const printBoard = () => {
   console.log('   0  1  2');
@@ -34,24 +35,62 @@ const printBoard = () => {
 
 const horizontalWin = () => {
   // Your code here to check for horizontal wins
+  for(let i = 0; i < board.length; i++){
+    if((board[i][0] === 'X' && board[i][1] === 'X' && board[i][2] === 'X') || (board[i][0] === 'O' && board[i][1] === 'O' && board[i][2] === 'O')){
+      return true;
+    }
+  }
+  return false;
 }
 
 const verticalWin = () => {
   // Your code here to check for vertical wins
+  if((board[0][0] === 'X' && board[1][0] === 'X' && board[2][0] === 'X') || (board[0][0] === 'O' && board[1][0] === 'O' && board[2][0] === 'O')){
+    return true;
+  }else return (board[0][1] === 'X' && board[1][1] === 'X' && board[2][1] === 'X') || (board[0][1] === 'O' && board[1][1] === 'O' && board[2][1] === 'O') || (board[0][2] === 'X' && board[1][2] === 'X' && board[2][0] === 'X') || (board[0][2] === 'O' && board[1][2] === 'O' && board[2][0] === 'O');
+
+
 }
 
 const diagonalWin = () => {
   // Your code here to check for diagonal wins
+  return (board[0][0] === 'X' && board[1][1] === 'X' && board[2][2] === 'X') || (board[0][0] === 'O' && board[1][1] === 'O' && board[2][2] === 'O') || (board[0][2] === 'X' && board[1][1] === 'X' && board[2][0] === 'X') || (board[0][2] === 'O' && board[1][1] === 'O' && board[2][2] === 'O');
+
+
 }
+
 
 const checkForWin = () => {
   // Your code here call each of the check for types of wins
+  return !!(horizontalWin() || verticalWin() || diagonalWin());
 }
+
 
 const ticTacToe = (row, column) => {
   // Your code here to place a marker on the board
   // then check for a win
+
+  let moves = 1;
+
+  while(moves > 0 && moves < 5){
+    board[row][column] = playerTurn;
+    moves++;
+  }
+
+  if(moves >= 5 && checkForWin()){
+    console.log('Congratulations, player ' + playerTurn + ' Wins!');
+    console.log('Reset Board');
+  }else{
+    board[row][column] = playerTurn;
+  }
+
+  if(playerTurn === 'X'){
+    playerTurn = 'O';
+  }else{
+    playerTurn = 'X';
+  }
 }
+
 
 const getPrompt = () => {
   printBoard();
